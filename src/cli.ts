@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { runFullMatrix, runProbe, buildOriginMatrix } from './engine.js';
+import { runFullMatrix, runProbe } from './engine.js';
+import { countCritical } from './analysis/summarize-results.js';
+import { resultsToJson } from './reporters/json.js';
+import { formatProbeHeader } from './reporters/table.js';
 
 const program = new Command();
 program.name('hx-cors').description('Advanced CORS misconfiguration probe matrix').version('1.0.0');
@@ -14,23 +17,19 @@ program
   .action(async (url: string, opts: { json?: boolean }) => {
     const results = await runFullMatrix(url);
     if (opts.json) {
-      console.log(JSON.stringify(results, null, 2));
+      console.log(resultsToJson(results));
       return;
     }
-    let critical = 0;
     for (const r of results) {
-      console.log(
-        chalk.bold(`\n[${r.probe.name}] ${r.probe.method} Origin=${r.probe.origin ?? '(none)'}`),
-      );
+      console.log(formatProbeHeader(r));
       console.log(`  HTTP ${r.status} ACAO=${r.acao ?? '-'} ACAC=${r.acac ?? '-'}`);
       for (const f of r.findings) {
         const c =
           f.severity === 'critical' ? chalk.red : f.severity === 'high' ? chalk.yellow : chalk.dim;
         console.log(`  ${c(`[${f.severity}] ${f.message}`)}`);
-        if (f.severity === 'critical' || f.severity === 'high') critical++;
       }
     }
-    process.exit(critical > 0 ? 2 : 0);
+    process.exit(countCritical(results) > 0 ? 2 : 0);
   });
 
 program
@@ -46,7 +45,7 @@ program
       method: 'GET',
       useCredentials: Boolean(opts.cred),
     });
-    console.log(JSON.stringify(r, null, 2));
+    console.log(resultsToJson([r]));
     process.exit(r.findings.some((f) => f.severity === 'critical') ? 2 : 0);
   });
 
