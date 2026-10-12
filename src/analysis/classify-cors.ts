@@ -42,7 +42,11 @@ export function classifyCors(probe: CorsProbe, status: number, headers: Headers)
   }
 
   if (probe.method === 'OPTIONS' && status >= 200 && status < 300 && acam) {
-    findings.push({ severity: 'info', id: 'preflight-ok', message: `Preflight answered: methods=${acam}` });
+    findings.push({
+      severity: 'info',
+      id: 'preflight-ok',
+      message: `Preflight answered: methods=${acam}`,
+    });
   }
 
   return { probe, status, acao, acac, acam, acah, findings };
