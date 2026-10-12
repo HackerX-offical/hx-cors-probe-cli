@@ -18,4 +18,9 @@ hx-cors matrix https://api.target.com/v1/user
 hx-cors probe https://api.target.com -o https://attacker.test --cred
 ```
 
-Pair with `hx-scope` before any probe. MIT — HackerX Official.
+Pair with `hx-scope` before any probe. HackerX License.
+
+## License
+
+Licensed under the [HackerX License](./LICENSE). Redistributions must retain copyright,
+license text, and [NOTICE](./NOTICE) attribution per the license terms.
