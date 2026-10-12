@@ -19,10 +19,13 @@ program
     }
     let critical = 0;
     for (const r of results) {
-      console.log(chalk.bold(`\n[${r.probe.name}] ${r.probe.method} Origin=${r.probe.origin ?? '(none)'}`));
+      console.log(
+        chalk.bold(`\n[${r.probe.name}] ${r.probe.method} Origin=${r.probe.origin ?? '(none)'}`),
+      );
       console.log(`  HTTP ${r.status} ACAO=${r.acao ?? '-'} ACAC=${r.acac ?? '-'}`);
       for (const f of r.findings) {
-        const c = f.severity === 'critical' ? chalk.red : f.severity === 'high' ? chalk.yellow : chalk.dim;
+        const c =
+          f.severity === 'critical' ? chalk.red : f.severity === 'high' ? chalk.yellow : chalk.dim;
         console.log(`  ${c(`[${f.severity}] ${f.message}`)}`);
         if (f.severity === 'critical' || f.severity === 'high') critical++;
       }
