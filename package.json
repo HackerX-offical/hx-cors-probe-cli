@@ -29,5 +29,13 @@
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackerX-official/hx-cors-probe-cli.git"
+  },
+  "homepage": "https://github.com/HackerX-official/hx-cors-probe-cli#readme",
+  "bugs": {
+    "url": "https://github.com/HackerX-official/hx-cors-probe-cli/issues"
   }
 }
