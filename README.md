@@ -19,7 +19,7 @@ URL and classifies findings by severity for reporting and CI gates.
 ## Install
 
 ```bash
-git clone https://github.com/HackerX-offical/hx-cors-probe-cli.git
+git clone https://github.com/HackerX-official/hx-cors-probe-cli.git
 cd hx-cors-probe-cli
 npm install
 npm run build
